@@ -1,0 +1,13 @@
+{
+	"appId": "com.cybermath.app",
+	"appName": "CyberMath",
+	"webDir": "dist",
+	"server": {
+		"url": "https://cybermath.com",
+		"cleartext": true
+	},
+	"packageClassList": [
+		"CAPCameraPlugin",
+		"SplashScreenPlugin"
+	]
+}
