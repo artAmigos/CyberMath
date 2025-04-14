@@ -1,9 +1,0 @@
-{
-  "appId": "com.cybermath.app",
-  "appName": "CyberMath",
-  "webDir": "dist",
-  "server": {
-    "url": "https://apparta.online",
-    "cleartext": true
-  }
-}

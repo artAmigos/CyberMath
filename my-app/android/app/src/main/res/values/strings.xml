@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">CyberMath</string>
-    <string name="title_activity_main">CyberMath</string>
-    <string name="package_name">com.cybermath.app</string>
-    <string name="custom_url_scheme">com.cybermath.app</string>
-</resources>
