@@ -1,26 +1,30 @@
 <?php
-require_once '../../db.php';  // Подключаем БД
+require_once '../../db.php';
 
-// Проверка, если форма отправлена
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $identifier = $_POST['email_or_username'];
     $password = $_POST['password'];
 
-    // Ищем пользователя по email или логину
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? OR name = ?");
     $stmt->execute([$identifier, $identifier]);
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['password'])) {
-        session_start();
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_name'] = $user['name'];
-        header("Location: profile.php");
-        exit;
+        if ($user['status'] === 'blocked') {
+            $error = "Ваш аккаунт заблокирован администратором.";
+        } else {
+            session_start();
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            header("Location: profile.php");
+            exit;
+        }
     } else {
         $error = "Неверный логин/email или пароль.";
     }
+
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -125,7 +129,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
-        /* Floating emojis */
         .emoji {
             position: absolute;
             font-size: 40px;
@@ -147,14 +150,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body>
-    <!-- Animated floating emojis -->
     <div class="emoji">🎉</div>
     <div class="emoji">✨</div>
     <div class="emoji">🚀</div>
     <div class="emoji">😎</div>
     <div class="emoji">🔥</div>
 
-    <!-- Login box -->
     <div class="login-box">
         <h1>Вход</h1>
         <p class="tagline">Войдите с email или логином</p>

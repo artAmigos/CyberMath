@@ -3,11 +3,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
 
-// Загружаем .env
+// .env
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-// Получаем переменные
 $host = $_ENV['DB_HOST'];
 $db = $_ENV['DB_NAME'];
 $user = $_ENV['DB_USER'];

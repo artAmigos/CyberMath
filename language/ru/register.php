@@ -1,19 +1,17 @@
 <?php
 session_start();
-require_once '../../db.php';  // Подключаем БД
+require_once '../../db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
     $passwordRaw = $_POST['password'];
 
-    // Проверка силы пароля
     if (strlen($passwordRaw) < 8 || !preg_match('/[A-Za-z]/', $passwordRaw) || !preg_match('/[0-9]/', $passwordRaw)) {
         $error = "Пароль должен содержать минимум 8 символов, включая буквы и цифры.";
     } else {
         $password = password_hash($passwordRaw, PASSWORD_DEFAULT);
 
-        // Проверка на существование email или имени
         $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? OR name = ?");
         $stmt->execute([$email, $name]);
         $user = $stmt->fetch();
@@ -167,14 +165,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body>
-    <!-- Анимированные эмодзи -->
     <div class="emoji">🎉</div>
     <div class="emoji">✨</div>
     <div class="emoji">🚀</div>
     <div class="emoji">😎</div>
     <div class="emoji">🔥</div>
 
-    <!-- Регистрация -->
     <div class="login-box">
         <h1>Регистрация</h1>
         <p class="tagline">Создайте аккаунт для CyberMath</p>

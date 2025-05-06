@@ -97,7 +97,7 @@
     <div class="emoji">⚡</div>
 
     <div id="loading-container" class="container">
-        <p class="text">🚀 The best activity booste</p>
+        <p class="text">🚀 The best activity booster</p>
         <p class="text hidden-ru">🚀 Лучший усилитель активности</p>
 
         <p class="text">💡 CyberMath – Where you will become popular forever!</p>

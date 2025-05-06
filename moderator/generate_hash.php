@@ -1,6 +1,6 @@
 <?php
 // Вводите пароль для хеширования
-$password = '43543543'; // Замените на нужный пароль
+$password = 'lollol228'; // Замените на нужный пароль
 
 // Генерация хеша пароля
 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
