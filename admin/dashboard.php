@@ -9,6 +9,32 @@ if (!isset($_SESSION['admin_id'])) {
 
 $stmt = $pdo->query("SELECT * FROM moderator_requests ORDER BY created_at DESC");
 $requests = $stmt->fetchAll();
+
+if (isset($_POST['ban_user'])) {
+    $target_name = $_POST['target_name'];
+    $stmt = $pdo->prepare("UPDATE users SET status = 'blocked' WHERE name = ?");
+    $stmt->execute([$target_name]);
+}
+
+if (isset($_POST['unban_user'])) {
+    $target_name = $_POST['target_name'];
+    $stmt = $pdo->prepare("UPDATE users SET status = 'active' WHERE name = ?");
+    $stmt->execute([$target_name]);
+}
+
+if (isset($_POST['update_coins'])) {
+    $target_name = $_POST['target_name'];
+    $new_coins = $_POST['coins'];
+    $stmt = $pdo->prepare("UPDATE users SET coins = ? WHERE name = ?");
+    $stmt->execute([$new_coins, $target_name]);
+}
+
+if (isset($_POST['delete_user'])) {
+    $target_name = $_POST['target_name'];
+    $stmt = $pdo->prepare("DELETE FROM users WHERE name = ?");
+    $stmt->execute([$target_name]);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -71,6 +97,36 @@ $requests = $stmt->fetchAll();
                 💤 Нет запросов от модераторов
             </div>
         <?php endif; ?>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mt-10">Управление пользователями</h2>
+        <div class="space-y-6 mt-4">
+
+            <form method="POST" class="flex items-center gap-4">
+                <input type="text" name="target_name" placeholder="Ник пользователя" class="px-4 py-2 border rounded w-1/4" required>
+                <button type="submit" name="ban_user" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Забанить</button>
+                <button type="submit" name="unban_user" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Снять бан</button>
+            </form>
+
+            <form method="POST" class="flex items-center gap-4">
+                <input type="text" name="target_name" placeholder="Ник пользователя" class="px-4 py-2 border rounded w-1/4" required>
+                <input type="number" name="coins" placeholder="Количество монет" class="px-4 py-2 border rounded w-1/4" required>
+                <button type="submit" name="update_coins" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Обновить монеты</button>
+            </form>
+
+            <form method="POST" class="flex items-center gap-4">
+                <input type="text" name="target_name" placeholder="Ник пользователя" class="px-4 py-2 border rounded w-1/4" required>
+                <button type="submit" name="delete_user" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Удалить пользователя</button>
+            </form>
+        </div>
     </div>
+
+    <div class="mt-12 bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">🛠️ Генератор новых тем</h2>
+            <p class="text-gray-600 mb-4">Здесь вы можете создать новую тему и её задания для пользователей.</p>
+        <a href="create_topic.php" class="inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+        ➕ Новая тема
+        </a>
+    </div>
+
 </body>
 </html>

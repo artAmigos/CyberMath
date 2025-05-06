@@ -1,12 +1,11 @@
 <?php
 session_start();
-include('../db.php'); // подключение к базе данных
+include('../db.php');
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Проверка в таблице admins
     $stmt = $pdo->prepare("SELECT * FROM admins WHERE email = :email");
     $stmt->execute(['email' => $email]);
     $admin = $stmt->fetch();
